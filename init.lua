@@ -105,6 +105,9 @@ require('packer').startup(function(use)
     },
   })
 
+  -- Typescript Linting 
+  require'lspconfig'.tsserver.setup {}
+
   -- Other Display Tools
   use 'nvim-lua/plenary.nvim'
   use 'sindrets/diffview.nvim'
@@ -339,6 +342,17 @@ vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float)
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist)
+
+-- Diagnostic config
+vim.diagnostic.config({
+  virtual_text = false,
+  signs = true,
+  underline = true,
+  update_in_insert = false,
+  severity_sort = false,
+})
+vim.o.updatetime = 250
+vim.cmd [[autocmd! CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]]
 
 -- LSP settings.
 --  This function gets run when an LSP connects to a particular buffer.
