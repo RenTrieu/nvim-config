@@ -105,6 +105,9 @@ require('packer').startup(function(use)
     },
   })
 
+  -- Delete Hidden Buffers
+  use 'arithran/vim-delete-hidden-buffers'
+
   -- Typescript Linting 
   require'lspconfig'.tsserver.setup {}
 
