@@ -110,6 +110,8 @@ require('packer').startup(function(use)
 
   -- Typescript Linting 
   require'lspconfig'.tsserver.setup {}
+  -- Python Linting
+  require'lspconfig'.pyright.setup{}
 
   -- Other Display Tools
   use 'nvim-lua/plenary.nvim'
