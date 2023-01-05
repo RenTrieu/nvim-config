@@ -64,6 +64,7 @@ require('packer').startup(function(use)
   use 'voidekh/kyotonight.vim'
   use 'dracula/vim'
   use 'arcticicestudio/nord-vim'
+  use 'paulfrische/reddish.nvim'
 
   -- NVIM Tree
   use {
@@ -113,11 +114,20 @@ require('packer').startup(function(use)
   -- Python Linting
   require'lspconfig'.pyright.setup{}
 
-  -- Other Display Tools
+  -- Other Misc Tools
   use 'nvim-lua/plenary.nvim'
   use 'sindrets/diffview.nvim'
   use 'junegunn/fzf'
   use 'junegunn/fzf.vim'
+  use {
+    "princejoogie/chafa.nvim",
+    requires = {
+      "nvim-lua/plenary.nvim",
+      "m00qek/baleia.nvim"
+    },
+  }
+  use 'EtiamNullam/deferred-clipboard.nvim'
+  use 'roobert/search-replace.nvim'
 
   -- Add custom plugins to packer from ~/.config/nvim/lua/custom/plugins.lua
   local has_plugins, plugins = pcall(require, 'custom.plugins')
