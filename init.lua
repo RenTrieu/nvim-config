@@ -65,6 +65,7 @@ require('packer').startup(function(use)
   use 'dracula/vim'
   use 'arcticicestudio/nord-vim'
   use 'paulfrische/reddish.nvim'
+  use 'tssm/fairyfloss.vim'
 
   -- NVIM Tree
   use {
