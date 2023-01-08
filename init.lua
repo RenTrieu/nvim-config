@@ -55,10 +55,19 @@ require('packer').startup(function(use)
   use 'tpope/vim-sleuth' -- Detect tabstop and shiftwidth automatically
 
   -- Fuzzy Finder (files, lsp, etc)
-  use { 'nvim-telescope/telescope.nvim', branch = '0.1.x', requires = { 'nvim-lua/plenary.nvim' } }
+  use { 'nvim-telescope/telescope.nvim', branch = '0.1.x', requires = { 
+    'nvim-lua/plenary.nvim',
+    'BurntSushi/ripgrep',
+    'sharkdp/fd'
+  } }
+  use 'BurntSushi/ripgrep'
+  use 'sharkdp/fd'
 
   -- Fuzzy Finder Algorithm which requires local dependencies to be built. Only load if `make` is available
   use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make', cond = vim.fn.executable 'make' == 1 }
+
+  -- Clipboard Sharing
+  vim.cmd[[set clipboard^=unnamed,unnamedplus]]
 
   -- Colorscheme Plugins
   use 'voidekh/kyotonight.vim'
