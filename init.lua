@@ -75,6 +75,9 @@ require('packer').startup(function(use)
   use 'arcticicestudio/nord-vim'
   use 'paulfrische/reddish.nvim'
   use 'tssm/fairyfloss.vim'
+  use 'Rigellute/shades-of-purple.vim'
+  use 'Shadorain/shadotheme'
+  use 'sabrinagannon/vim-garbage-oracle'
 
   -- NVIM Tree
   use {
