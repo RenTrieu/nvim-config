@@ -126,6 +126,8 @@ require('packer').startup(function(use)
   require'lspconfig'.tsserver.setup {}
   -- Python Linting
   require'lspconfig'.pyright.setup{}
+  -- Rust Linting
+  require'lspconfig'.rust_analyzer.setup({})
 
   -- Other Misc Tools
   use 'nvim-lua/plenary.nvim'
