@@ -125,7 +125,7 @@ require('packer').startup(function(use)
   -- Typescript Linting 
   require'lspconfig'.tsserver.setup {}
   -- Python Linting
-  require'lspconfig'.pyright.setup{}
+  require'lspconfig'.pyright.setup{diagnosticMode = "openFilesOnly"}
   -- Rust Linting
   require'lspconfig'.rust_analyzer.setup({})
 
