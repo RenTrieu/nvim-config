@@ -128,6 +128,8 @@ require('packer').startup(function(use)
   require'lspconfig'.pyright.setup{diagnosticMode = "openFilesOnly"}
   -- Rust Linting
   require'lspconfig'.rust_analyzer.setup({})
+  -- C++ Linting
+  require'lspconfig'.clangd.setup({})
 
   -- Other Misc Tools
   use 'nvim-lua/plenary.nvim'
