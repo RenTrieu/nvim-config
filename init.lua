@@ -126,6 +126,12 @@ require('packer').startup(function(use)
   require'lspconfig'.tsserver.setup {}
   -- Python Linting
   require'lspconfig'.pyright.setup{diagnosticMode = "openFilesOnly"}
+  use 'nvie/vim-flake8'
+  use 'neomake/neomake'
+  vim.cmd([[
+    call neomake#configure#automake('nrw', 50)
+    let g:neomake_python_enabled_makers = ['pylint']
+  ]])
   -- Rust Linting
   require'lspconfig'.rust_analyzer.setup({})
   -- C++ Linting
