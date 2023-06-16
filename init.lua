@@ -82,6 +82,7 @@ require('packer').startup(function(use)
   use 'Shadorain/shadotheme'
   use 'sabrinagannon/vim-garbage-oracle'
   use 'folke/tokyonight.nvim'
+  use 'hachy/eva01.vim'
 
   -- NVIM Tree
   use {
