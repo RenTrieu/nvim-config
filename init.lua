@@ -217,7 +217,7 @@ vim.wo.signcolumn = 'yes'
 
 -- Set colorscheme
 vim.o.termguicolors = true
-vim.cmd [[colorscheme shades_of_purple]]
+vim.cmd [[colorscheme shado-legacy]]
 
 -- Set completeopt to have a better completion experience
 vim.o.completeopt = 'menuone,noselect'
@@ -266,9 +266,13 @@ require('Comment').setup()
 
 -- Enable `lukas-reineke/indent-blankline.nvim`
 -- See `:help indent_blankline.txt`
-require('indent_blankline').setup {
-  char = '┊',
-  show_trailing_blankline_indent = false,
+require('ibl').setup {
+  indent = {
+    char = '┊',
+  },
+  whitespace = {
+    remove_blankline_trail = true,
+  }
 }
 
 -- Gitsigns
