@@ -26,7 +26,7 @@ require('packer').startup(function(use)
   -- Useful status updates for LSP
   use {
     'j-hui/fidget.nvim',
-    tag=legacy
+    tag = "v1.1.0"
   }
 
   use { -- Autocompletion
@@ -107,9 +107,11 @@ require('packer').startup(function(use)
 
   -- OR setup with some options
   require("nvim-tree").setup({
-    sort_by = "case_sensitive",
+    sort = {
+      sorter = "case_sensitive",
+    },
     view = {
-      adaptive_size = true,
+      -- adaptive_size = true,
       mappings = {
         list = {
           { key = "u", action = "dir_up" },
