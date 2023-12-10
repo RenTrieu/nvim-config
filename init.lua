@@ -107,9 +107,7 @@ require('packer').startup(function(use)
 
   -- OR setup with some options
   require("nvim-tree").setup({
-    sort = {
-      sorter = "case_sensitive",
-    },
+    sort_by = "case_sensitive",
     view = {
       -- adaptive_size = true,
       mappings = {
