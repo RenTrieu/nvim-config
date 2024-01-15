@@ -83,6 +83,12 @@ require('packer').startup(function(use)
   use 'sabrinagannon/vim-garbage-oracle'
   use 'folke/tokyonight.nvim'
   use 'hachy/eva01.vim'
+  use 'therubymug/vim-pyte'
+  use 'rose-pine/neovim'
+  use 'archseer/colibri.vim'
+  use 'hardhackerlabs/theme-vim'
+  use 'liminalminds/icecream.nvim'
+  use 'sabrinagannon/vim-garbage-oracle'
 
   -- NVIM Tree
   use {
@@ -102,14 +108,11 @@ require('packer').startup(function(use)
   -- set termguicolors to enable highlight groups
   vim.opt.termguicolors = true
 
-  -- empty setup using defaults
-  require("nvim-tree").setup()
-
   -- OR setup with some options
   require("nvim-tree").setup({
     sort_by = "case_sensitive",
     view = {
-      -- adaptive_size = true,
+      adaptive_size = true,
       mappings = {
         list = {
           { key = "u", action = "dir_up" },
@@ -141,6 +144,92 @@ require('packer').startup(function(use)
   require'lspconfig'.rust_analyzer.setup({})
   -- C++ Linting
   require'lspconfig'.clangd.setup({})
+
+  -- Debugger
+  use 'mfussenegger/nvim-dap'
+  use 'jay-babu/mason-nvim-dap.nvim'
+
+  -- C/C++/Rust (via GDB)
+  local dap = require('dap')
+  dap.adapters.codelldb = {
+    type = 'server',
+    host = '127.0.0.1',
+    port = "13000", -- Use the port printed out or specified with `--port`
+    executable = {
+      command = vim.env.CODELLDB,
+      args = {"--port", "13000"},
+    }
+  }
+  dap.configurations.cpp= {
+    {
+      name = 'Attach to gdbserver 13000',
+      type = 'codelldb',
+      request = 'launch',
+      MIMode = 'gdb',
+      miDebuggerServerAddress = 'localhost:13000',
+      miDebuggerPath = '/usr/bin/gdb',
+      cwd = '${workspaceFolder}',
+      args = function()
+        pos_args = vim.fn.input('Positional arguments: ');
+        arg_list = {};
+
+        -- From https://stackoverflow.com/questions/28664139/lua-split-string-into-words-unless-quoted
+        local spat, epat, buf, quoted = [=[^(['"])]=], [=[(['"])$]=]
+        for arg in pos_args:gmatch("(%S+)") do
+          local squoted = arg:match(spat)
+          local equoted = arg:match(epat)
+          local escaped = arg:match([=[(\*)['"]$]=])
+          if squoted and not quoted and not equoted then
+            buf, quoted = arg, squoted
+          elseif buf and equoted == quoted and #escaped % 2 == 0 then
+            arg, buf, quoted = buf .. ' ' .. arg, nil, nil
+          elseif buf then
+            buf = buf .. ' ' .. arg
+          end
+          if not buf then table.insert(arg_list, (arg:gsub(spat,""):gsub(epat,""))) end
+        end
+        return arg_list
+      end,
+      program = function()
+        return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+      end,
+    }
+  }
+  dap.configurations.rust = {
+    {
+      name = 'Attach to gdbserver 13000',
+      type = 'codelldb',
+      request = 'launch',
+      MIMode = 'gdb',
+      miDebuggerServerAddress = 'localhost:13000',
+      miDebuggerPath = '/usr/bin/gdb',
+      cwd = '${workspaceFolder}',
+      args = function()
+        pos_args = vim.fn.input('Positional arguments: ');
+        arg_list = {};
+
+        -- From https://stackoverflow.com/questions/28664139/lua-split-string-into-words-unless-quoted
+        local spat, epat, buf, quoted = [=[^(['"])]=], [=[(['"])$]=]
+        for arg in pos_args:gmatch("(%S+)") do
+          local squoted = arg:match(spat)
+          local equoted = arg:match(epat)
+          local escaped = arg:match([=[(\*)['"]$]=])
+          if squoted and not quoted and not equoted then
+            buf, quoted = arg, squoted
+          elseif buf and equoted == quoted and #escaped % 2 == 0 then
+            arg, buf, quoted = buf .. ' ' .. arg, nil, nil
+          elseif buf then
+            buf = buf .. ' ' .. arg
+          end
+          if not buf then table.insert(arg_list, (arg:gsub(spat,""):gsub(epat,""))) end
+        end
+        return arg_list
+      end,
+      program = function()
+        return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+      end,
+    }
+  }
 
   -- Other Misc Tools
   use 'nvim-lua/plenary.nvim'
@@ -475,6 +564,7 @@ capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
 -- Setup mason so it can manage external tooling
 require('mason').setup()
+require('mason-nvim-dap').setup()
 
 -- Ensure the servers above are installed
 local mason_lspconfig = require 'mason-lspconfig'
