@@ -130,7 +130,10 @@ require('packer').startup(function(use)
   -- Typescript Linting 
   require'lspconfig'.tsserver.setup {}
   -- Python Linting
-  require'lspconfig'.pyright.setup{diagnosticMode = "openFilesOnly"}
+  require'lspconfig'.pyright.setup{
+    diagnosticMode = "openFilesOnly",
+    cmd = {'ruff-lsp'},
+  }
   use 'nvie/vim-flake8'
   use 'neomake/neomake'
   vim.cmd([[
