@@ -128,9 +128,11 @@ require('packer').startup(function(use)
   use 'arithran/vim-delete-hidden-buffers'
 
   -- Typescript Linting 
-  require'lspconfig'.tsserver.setup {}
+  require'lspconfig'.tsserver.setup{
+    cmd = {'typescript-language-server', '--stdio'},
+  }
   -- Python Linting
-  require'lspconfig'.pyright.setup{
+  require'lspconfig'.ruff_lsp.setup{
     diagnosticMode = "openFilesOnly",
     cmd = {'ruff-lsp'},
   }
