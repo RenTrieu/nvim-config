@@ -31,17 +31,21 @@ require('packer').startup(function(use)
     requires = { 'hrsh7th/cmp-nvim-lsp', 'L3MON4D3/LuaSnip', 'saadparwaiz1/cmp_luasnip' },
   }
 
+  --[[
   use { -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
     run = function()
       pcall(require('nvim-treesitter.install').update { with_sync = true })
     end,
   }
+  --]]
 
+  --[[
   use { -- Additional text objects via treesitter
     'nvim-treesitter/nvim-treesitter-textobjects',
     after = 'nvim-treesitter',
   }
+  --]]
 
   -- Git related plugins
   use 'tpope/vim-fugitive'
@@ -93,7 +97,7 @@ require('packer').startup(function(use)
     requires = {
       'nvim-tree/nvim-web-devicons', -- optional, for file icons
     },
-    tag = 'nightly' -- optional, updated every week. (see issue #1193)
+    tag = 'v1.3.3' -- optional, updated every week. (see issue #1193)
   }
 
   -- examples for your init.lua
@@ -110,11 +114,11 @@ require('packer').startup(function(use)
     sort_by = "case_sensitive",
     view = {
       adaptive_size = true,
-      mappings = {
-        list = {
-          { key = "u", action = "dir_up" },
-        },
-      },
+      -- mappings = {
+      --   list = {
+      --     { key = "u", action = "dir_up" },
+      --   },
+      -- },
     },
     renderer = {
       group_empty = true,
@@ -409,6 +413,7 @@ vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { de
 
 -- [[ Configure Treesitter ]]
 -- See `:help nvim-treesitter`
+--[[
 require('nvim-treesitter.configs').setup {
   -- Add languages to be installed here that you want installed for treesitter
   ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'typescript', 'vimdoc' },
@@ -443,7 +448,7 @@ require('nvim-treesitter.configs').setup {
       set_jumps = true, -- whether to set jumps in the jumplist
       goto_next_start = {
         [']m'] = '@function.outer',
-        [']]'] = '@class.outer',
+        [']\]'] = '@class.outer',
       },
       goto_next_end = {
         [']M'] = '@function.outer',
@@ -469,6 +474,7 @@ require('nvim-treesitter.configs').setup {
     },
   },
 }
+--]]
 
 -- Diagnostic keymaps
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
