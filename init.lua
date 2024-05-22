@@ -97,7 +97,7 @@ require('packer').startup(function(use)
     requires = {
       'nvim-tree/nvim-web-devicons', -- optional, for file icons
     },
-    tag = 'nightly' -- optional, updated every week. (see issue #1193)
+    tag = 'v1.3.3' -- optional, updated every week. (see issue #1193)
   }
 
   -- examples for your init.lua
@@ -114,11 +114,13 @@ require('packer').startup(function(use)
     sort_by = "case_sensitive",
     view = {
       adaptive_size = true,
+      --[[
       mappings = {
         list = {
           { key = "u", action = "dir_up" },
         },
       },
+      ]]--
     },
     renderer = {
       group_empty = true,
@@ -127,6 +129,9 @@ require('packer').startup(function(use)
       dotfiles = true,
     },
   })
+
+  -- Arduino
+  use {'stevearc/vim-arduino'}
 
   -- Delete Hidden Buffers
   use 'arithran/vim-delete-hidden-buffers'
