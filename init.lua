@@ -91,6 +91,7 @@ require('packer').startup(function(use)
   use 'sabrinagannon/vim-garbage-oracle'
 
   -- NVIM Tree
+  use 'nvim-tree/nvim-web-devicons'
   use {
     'nvim-tree/nvim-tree.lua',
     requires = {
@@ -144,6 +145,8 @@ require('packer').startup(function(use)
   require'lspconfig'.rust_analyzer.setup({})
   -- C++ Linting
   require'lspconfig'.clangd.setup({})
+  -- Java Linting
+  require'lspconfig'.jdtls.setup({})
 
   -- Debugger
   use 'mfussenegger/nvim-dap'
