@@ -160,6 +160,41 @@ require('packer').startup(function(use)
       args = {"--port", "13000"},
     }
   }
+  dap.configurations.cpp = {
+    {
+      name = 'Attach to gdbserver 13000',
+      type = 'codelldb',
+      request = 'launch',
+      MIMode = 'gdb',
+      miDebuggerServerAddress = 'localhost:13000',
+      miDebuggerPath = '/usr/bin/gdb',
+      cwd = '${workspaceFolder}',
+      args = function()
+        pos_args = vim.fn.input('Positional arguments: ');
+        arg_list = {};
+
+        -- From https://stackoverflow.com/questions/28664139/lua-split-string-into-words-unless-quoted
+        local spat, epat, buf, quoted = [=[^(['"])]=], [=[(['"])$]=]
+        for arg in pos_args:gmatch("(%S+)") do
+          local squoted = arg:match(spat)
+          local equoted = arg:match(epat)
+          local escaped = arg:match([=[(\*)['"]$]=])
+          if squoted and not quoted and not equoted then
+            buf, quoted = arg, squoted
+          elseif buf and equoted == quoted and #escaped % 2 == 0 then
+            arg, buf, quoted = buf .. ' ' .. arg, nil, nil
+          elseif buf then
+            buf = buf .. ' ' .. arg
+          end
+          if not buf then table.insert(arg_list, (arg:gsub(spat,""):gsub(epat,""))) end
+        end
+        return arg_list
+      end,
+      program = function()
+        return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+      end,
+    }
+  }
   dap.configurations.rust = {
     {
       name = 'Attach to gdbserver 13000',
