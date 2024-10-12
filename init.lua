@@ -96,7 +96,7 @@ require('packer').startup(function(use)
     requires = {
       'nvim-tree/nvim-web-devicons', -- optional, for file icons
     },
-    tag = 'nightly' -- optional, updated every week. (see issue #1193)
+    tag = 'v1.7.1' -- optional, updated every week. (see issue #1193)
   }
 
   -- examples for your init.lua
@@ -113,11 +113,13 @@ require('packer').startup(function(use)
     sort_by = "case_sensitive",
     view = {
       adaptive_size = true,
+      --[[
       mappings = {
         list = {
           { key = "u", action = "dir_up" },
         },
       },
+      ]]--
     },
     renderer = {
       group_empty = true,
@@ -131,7 +133,7 @@ require('packer').startup(function(use)
   use 'arithran/vim-delete-hidden-buffers'
 
   -- Typescript Linting 
-  require'lspconfig'.tsserver.setup {}
+  require'lspconfig'.ts_ls.setup {}
   -- Python Linting
   require'lspconfig'.pyright.setup{diagnosticMode = "openFilesOnly"}
   use 'nvie/vim-flake8'
@@ -246,6 +248,16 @@ require('packer').startup(function(use)
   use 'EtiamNullam/deferred-clipboard.nvim'
   use 'roobert/search-replace.nvim'
 
+  -- Markdown Rendering
+  use({
+      'MeanderingProgrammer/render-markdown.nvim',
+      after = { 'nvim-treesitter' },
+      requires = { 'nvim-tree/nvim-web-devicons', opt = true }, -- if you prefer nvim-web-devicons
+      config = function()
+          require('render-markdown').setup({})
+      end,
+  })
+
   -- Add custom plugins to packer from ~/.config/nvim/lua/custom/plugins.lua
   local has_plugins, plugins = pcall(require, 'custom.plugins')
   if has_plugins then
@@ -306,7 +318,7 @@ vim.wo.signcolumn = 'yes'
 
 -- Set colorscheme
 vim.o.termguicolors = true
-vim.cmd [[colorscheme nord]]
+vim.cmd [[colorscheme shado-legacy]]
 
 -- Set completeopt to have a better completion experience
 vim.o.completeopt = 'menuone,noselect'
@@ -545,7 +557,7 @@ local servers = {
   -- gopls = {},
   -- pyright = {},
   -- rust_analyzer = {},
-  -- tsserver = {},
+  -- ts_ls= {},
 
   lua_ls = {
     Lua = {
