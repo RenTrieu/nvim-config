@@ -147,6 +147,8 @@ require('packer').startup(function(use)
   require'lspconfig'.rust_analyzer.setup({})
   -- C++ Linting
   require'lspconfig'.clangd.setup({})
+  -- PHP Linting
+  require'lspconfig'.phpactor.setup({})
 
   -- Debugger
   use 'mfussenegger/nvim-dap'
@@ -319,7 +321,7 @@ vim.wo.signcolumn = 'yes'
 
 -- Set colorscheme
 vim.o.termguicolors = true
-vim.cmd [[colorscheme shado-legacy]]
+vim.cmd [[colorscheme tokyonight-moon]]
 
 -- Set completeopt to have a better completion experience
 vim.o.completeopt = 'menuone,noselect'
@@ -641,6 +643,17 @@ cmp.setup {
     { name = 'luasnip' },
   },
 }
+
+-- Preventing spam of "Server is cancelled issues" shown here: https://github.com/neovim/neovim/issues/30985
+for _, method in ipairs({ 'textDocument/diagnostic', 'workspace/diagnostic' }) do
+    local default_diagnostic_handler = vim.lsp.handlers[method]
+    vim.lsp.handlers[method] = function(err, result, context, config)
+        if err ~= nil and err.code == -32802 then
+            return
+        end
+        return default_diagnostic_handler(err, result, context, config)
+    end
+end
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
