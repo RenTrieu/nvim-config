@@ -90,6 +90,7 @@ require('packer').startup(function(use)
   use 'hardhackerlabs/theme-vim'
   use 'liminalminds/icecream.nvim'
   use 'sabrinagannon/vim-garbage-oracle'
+  use "rebelot/kanagawa.nvim"
 
   -- NVIM Tree
   use {
@@ -149,6 +150,8 @@ require('packer').startup(function(use)
   require'lspconfig'.clangd.setup({})
   -- PHP Linting
   require'lspconfig'.phpactor.setup({})
+  -- LaTeX Linting
+  require'lspconfig'.texlab.setup({})
 
   -- Debugger
   use 'mfussenegger/nvim-dap'
@@ -582,21 +585,21 @@ require('mason').setup()
 require('mason-nvim-dap').setup()
 
 -- Ensure the servers above are installed
-local mason_lspconfig = require 'mason-lspconfig'
-
-mason_lspconfig.setup {
-  ensure_installed = vim.tbl_keys(servers),
-}
-
-mason_lspconfig.setup_handlers {
-  function(server_name)
-    require('lspconfig')[server_name].setup {
-      capabilities = capabilities,
-      on_attach = on_attach,
-      settings = servers[server_name],
-    }
-  end,
-}
+-- local mason_lspconfig = require 'mason-lspconfig'
+--
+-- mason_lspconfig.setup {
+--   ensure_installed = vim.tbl_keys(servers),
+-- }
+--
+-- mason_lspconfig.setup_handlers {
+--   function(server_name)
+--     require('lspconfig')[server_name].setup {
+--       capabilities = capabilities,
+--       on_attach = on_attach,
+--       settings = servers[server_name],
+--     }
+--   end,
+-- }
 
 -- Turn on lsp status information
 require('fidget').setup()
