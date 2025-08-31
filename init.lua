@@ -91,6 +91,10 @@ require('packer').startup(function(use)
   use 'liminalminds/icecream.nvim'
   use 'sabrinagannon/vim-garbage-oracle'
   use "rebelot/kanagawa.nvim"
+  use {
+    "rijulpaul/nightblossom.nvim",
+    as = "nightblossom",
+  }
 
   -- NVIM Tree
   use {
@@ -152,6 +156,8 @@ require('packer').startup(function(use)
   require'lspconfig'.phpactor.setup({})
   -- LaTeX Linting
   require'lspconfig'.texlab.setup({})
+  -- Matlab Linting
+  require'lspconfig'.matlab_ls.setup({})
 
   -- Debugger
   use 'mfussenegger/nvim-dap'
@@ -324,7 +330,8 @@ vim.wo.signcolumn = 'yes'
 
 -- Set colorscheme
 vim.o.termguicolors = true
-vim.cmd [[colorscheme tokyonight-moon]]
+--vim.cmd [[colorscheme kanagawa-wave]]
+vim.cmd [[colorscheme nightblossom-pastel]]
 
 -- Set completeopt to have a better completion experience
 vim.o.completeopt = 'menuone,noselect'
