@@ -81,7 +81,6 @@ require('packer').startup(function(use)
   use 'tssm/fairyfloss.vim'
   use 'Rigellute/shades-of-purple.vim'
   use 'Shadorain/shadotheme'
-  use 'sabrinagannon/vim-garbage-oracle'
   use 'folke/tokyonight.nvim'
   use 'hachy/eva01.vim'
   use 'therubymug/vim-pyte'
@@ -90,10 +89,13 @@ require('packer').startup(function(use)
   use 'hardhackerlabs/theme-vim'
   use 'liminalminds/icecream.nvim'
   use 'sabrinagannon/vim-garbage-oracle'
-  use "rebelot/kanagawa.nvim"
+  use 'rebelot/kanagawa.nvim'
   use {
     "rijulpaul/nightblossom.nvim",
     as = "nightblossom",
+    config = function()
+      vim.cmd("colorscheme nightblossom-pastel")
+    end
   }
 
   -- NVIM Tree
@@ -139,9 +141,10 @@ require('packer').startup(function(use)
   use 'arithran/vim-delete-hidden-buffers'
 
   -- Typescript Linting 
-  require'lspconfig'.ts_ls.setup {}
+  vim.lsp.enable('ts_ls')
   -- Python Linting
-  require'lspconfig'.pyright.setup{diagnosticMode = "openFilesOnly"}
+  vim.lsp.enable('pyright')
+  vim.lsp.config('pyright', {diagnosticMode = 'openFilesOnly'})
   use 'nvie/vim-flake8'
   use 'neomake/neomake'
   vim.cmd([[
@@ -149,15 +152,15 @@ require('packer').startup(function(use)
     let g:neomake_python_enabled_makers = ['pylint']
   ]])
   -- Rust Linting
-  require'lspconfig'.rust_analyzer.setup({})
+  vim.lsp.enable('rust_analyzer')
   -- C++ Linting
-  require'lspconfig'.clangd.setup({})
+  vim.lsp.enable('clangd')
   -- PHP Linting
-  require'lspconfig'.phpactor.setup({})
+  vim.lsp.enable('phpactor')
   -- LaTeX Linting
-  require'lspconfig'.texlab.setup({})
+  vim.lsp.enable('texlab')
   -- Matlab Linting
-  require'lspconfig'.matlab_ls.setup({})
+  vim.lsp.enable('matlab_ls')
 
   -- Debugger
   use 'mfussenegger/nvim-dap'
@@ -328,10 +331,9 @@ vim.o.smartcase = true
 vim.o.updatetime = 250
 vim.wo.signcolumn = 'yes'
 
--- Set colorscheme
+-- Setting colorscheme 
 vim.o.termguicolors = true
---vim.cmd [[colorscheme kanagawa-wave]]
-vim.cmd [[colorscheme nightblossom-pastel]]
+vim.cmd([[colorscheme nightblossom-pastel]])
 
 -- Set completeopt to have a better completion experience
 vim.o.completeopt = 'menuone,noselect'
