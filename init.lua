@@ -273,6 +273,12 @@ require('packer').startup(function(use)
       end,
   })
 
+  -- Jupyter/IPython Notebooks 
+  vim.cmd('let g:jukit_mappings_ext_enabled = ["py", "ipynb"]')
+  vim.cmd('let g:jukit_terminal = "nvimterm"')
+  vim.cmd('let g:jukit_inline_plotting = 1')
+  use 'luk400/vim-jukit'
+
   -- Add custom plugins to packer from ~/.config/nvim/lua/custom/plugins.lua
   local has_plugins, plugins = pcall(require, 'custom.plugins')
   if has_plugins then
