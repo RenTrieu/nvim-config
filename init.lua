@@ -36,6 +36,7 @@ require('packer').startup(function(use)
 
   use { -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
+    branch = "master",
     run = function()
       pcall(require('nvim-treesitter.install').update { with_sync = true })
     end,
